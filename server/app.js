@@ -50,7 +50,7 @@ app.use(session({
   store: new RedisStore({
     client: redisClient,
   }),
-  secret: 'Then a Shlammi shows up, and he\'ll just run the whole show',
+  secret: 'YIPEE it is a secret!',
   resave: true,
   saveUninitialized: true,
   cookie: {

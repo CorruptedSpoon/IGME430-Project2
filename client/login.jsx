@@ -1,4 +1,5 @@
 const helper = require('./helper.js');
+const { NavHeader } = require('./components.jsx');
 
 const handleLogin = (e) => {
     e.preventDefault();
@@ -106,6 +107,14 @@ const init = async () => {
         );
         return false;
     });
+
+    ReactDOM.render(
+        <NavHeader links={[
+            {href: '/login', text: 'Login'},
+            {href: '/signup', text: 'Signup'}
+        ]} />,
+        document.getElementById('header') 
+    );
 
     ReactDOM.render(
         <LoginWindow csrf={data.csrfToken} />,

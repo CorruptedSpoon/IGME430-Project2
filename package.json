@@ -29,6 +29,7 @@
     "eslint": "^8.11.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.25.4",
+    "html-react-parser": "^3.0.4",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "express-handlebars": "^6.0.3",
     "express-session": "^1.17.2",
     "helmet": "^5.0.2",
+    "mgplus": "^1.1.0-beta.4",
     "mongoose": "^6.2.7",
     "redis": "^4.0.4",
     "serve-favicon": "^2.5.0",
