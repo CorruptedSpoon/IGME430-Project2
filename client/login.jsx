@@ -1,5 +1,7 @@
 const helper = require('./helper.js');
-const { NavHeader } = require('./components.jsx');
+const { NavHeader, RenderHeader } = require('./components.jsx');
+
+const circles = [];
 
 const handleLogin = (e) => {
     e.preventDefault();
@@ -10,7 +12,7 @@ const handleLogin = (e) => {
     const _csrf = e.target.querySelector('#_csrf').value;
 
     if(!username || !pass) {
-        helper.handleError('Username or password is empty!');
+        helper.handleError('all fields are required');
         return false;
     }
 
@@ -29,12 +31,12 @@ const handleSignup = (e) => {
     const _csrf = e.target.querySelector('#_csrf').value;
 
     if(!username || !pass || !pass2) {
-        helper.handleError('All fields are required!');
+        helper.handleError('all fields are required');
         return false;
     }
 
     if(pass !== pass2) {
-        helper.handleError('Passwords do not match!');
+        helper.handleError('passwords do not match');
         return false;
     }
 
@@ -52,12 +54,23 @@ const LoginWindow = (props) => {
             method="POST"
             className="mainForm"
         >
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username" />
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password" />
-            <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
-            <input className="formSubmit" type="submit" value="Sign in" />
+            <div className="mg-container">
+                <div className="mg-row"><label htmlFor="username">Username: </label></div>
+                <div className="mg-row"><input id="user" type="text" name="username" placeholder="username" /></div>
+                <div className="mg-row"><label htmlFor="pass">Password: </label></div>
+                <div className="mg-row"><input id="pass" type="password" name="pass" placeholder="password" /></div>
+                <div className="mg-row">
+                    <div className="mg-col mg-x--center">
+                        <div className="mg-row">
+                            <input className="formSubmit button--outline" type="submit" value="Sign in" />
+                        </div>
+                    </div>
+                </div>
+                <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
+                <div id="errorMessage" className="hidden mg-row mg-x--center">
+                    <p className="center-text"><span id="errorText"></span></p>
+                </div>
+            </div>
         </form>
     );
 };
@@ -71,27 +84,97 @@ const SignupWindow = (props) => {
             method="POST"
             className="mainForm"
         >
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username" />
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password" />
-            <label htmlFor="pass2">Password: </label>
-            <input id="pass2" type="password" name="pass2" placeholder="retype password" />
-            <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
-            <input className="formSubmit" type="submit" value="Sign in" />
+            <div className="mg-container">
+                <div className="mg-row"><label htmlFor="username">Username: </label></div>
+                <div className="mg-row"><input id="user" type="text" name="username" placeholder="username" /></div>
+                <div className="mg-row"><label htmlFor="pass">Password: </label></div>
+                <div className="mg-row"><input id="pass" type="password" name="pass" placeholder="password" /></div>
+                <div className="mg-row"><label htmlFor="pass2">Password: </label></div>
+                <div className="mg-row"><input id="pass2" type="password" name="pass2" placeholder="retype password" /></div>
+                <div className="mg-row">
+                    <div className="mg-col mg-x--center">
+                        <div className="mg-row">
+                            <input className="formSubmit button--outline" type="submit" value="Sign in" />
+                        </div>
+                    </div>
+                </div>
+                <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
+                <div id="errorMessage" className="hidden mg-row mg-row mg-x--center">
+                    <p className="center-text"><span id="errorText"></span></p>
+                </div>
+            </div>
         </form>
     );
+};
+
+const animateCanvas = () => {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = window.innerWidth;
+    const height = canvas.height = window.innerHeight;
+    const circleRadius = 230;
+    const circleSpeed = 1.3;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle='rgba(255, 240, 147, 0.03)';
+
+    const moveCircle = (circleIndex) => {
+        const circle = circles[circleIndex];
+
+        // if the direction is 0, generate a new random direction vector
+        if(circle.dirX === 0 && circle.dirY === 0) {
+            circle.dirX = Math.random() * 3 - 1;
+            circle.dirY = Math.random() * 3 - 1;
+
+            // normalize the direction vector
+            const length = Math.sqrt(circle.dirX * circle.dirX + circle.dirY * circle.dirY);
+            circle.dirX /= length;
+            circle.dirY /= length;
+
+            // set the position to a random position on the screen
+            circle.x = Math.random() * width;
+            circle.y = Math.random() * height;
+        }
+
+        // if the center circle is colliding with the edge of the canvas, reverse the direction
+        if(circle.x < 0 || circle.x > width) {
+            circle.dirX *= -1;
+        }
+        if(circle.y < 0 || circle.y > height) {
+            circle.dirY *= -1;
+        }
+
+        // move the circle
+        circle.x += circle.dirX * circleSpeed;
+        circle.y += circle.dirY * circleSpeed;
+        
+        // draw the circle to the canvas
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, circleRadius, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+
+    for(let i = 0; i < circles.length; i++) {
+        moveCircle(i);
+    }
 };
 
 const init = async () => {
     const response = await fetch('/getToken');
     const data = await response.json();
+    const links = [
+        {href: '/login', text: 'Login', id: 'loginButton', current: false},
+        {href: '/signup', text: 'Signup', id: 'signupButton', current: false},
+    ];
+
+    RenderHeader(links, 'loginButton');
 
     const loginButton = document.getElementById('loginButton');
     const signupButton = document.getElementById('signupButton');
 
     loginButton.addEventListener('click', (e) => {
         e.preventDefault();
+        RenderHeader(links, 'loginButton');
         ReactDOM.render(
             <LoginWindow csrf={data.csrfToken} />,
             document.getElementById('content')
@@ -101,6 +184,7 @@ const init = async () => {
 
     signupButton.addEventListener('click', (e) => {
         e.preventDefault();
+        RenderHeader(links, 'signupButton');
         ReactDOM.render(
             <SignupWindow csrf={data.csrfToken} />,
             document.getElementById('content')
@@ -109,17 +193,15 @@ const init = async () => {
     });
 
     ReactDOM.render(
-        <NavHeader links={[
-            {href: '/login', text: 'Login'},
-            {href: '/signup', text: 'Signup'}
-        ]} />,
-        document.getElementById('header') 
-    );
-
-    ReactDOM.render(
         <LoginWindow csrf={data.csrfToken} />,
         document.getElementById('content')
     );
+    
+    const numCircles = 6;
+    for( let i = 0; i < numCircles; i++) {
+        circles.push({x: 0, y: 0, dirX: 0, dirY: 0});
+    }
+    setInterval(animateCanvas, 1);
 };
 
 window.onload = init;

@@ -1,1 +1,216 @@
-(()=>{var e={603:e=>{const t=e=>{document.getElementById("errorText").textContent=e,document.getElementById("errorMessage").classList.remove("hidden")};e.exports={handleError:t,sendPost:async(e,a,o)=>{const r=await fetch(e,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(a)}),n=await r.json();document.getElementById("errorMessage").classList.add("hidden"),n.error&&t(n.error),n.redirect&&(window.location=n.redirect),o&&o(n)},hideError:()=>{document.getElementById("errorMessage").classList.add("hidden")}}}},t={};function a(o){var r=t[o];if(void 0!==r)return r.exports;var n=t[o]={exports:{}};return e[o](n,n.exports,a),n.exports}(()=>{const e=a(603),t=t=>{t.preventDefault(),e.hideError();const a=t.target.querySelector("#domoName").value,o=t.target.querySelector("#domoAge").value,r=t.target.querySelector("#domoMoney").value,m=t.target.querySelector("#_csrf").value;return a&&o?(e.sendPost(t.target.action,{name:a,age:o,money:r,_csrf:m},n),!1):(e.handleError("All fields are required!"),!1)},o=e=>React.createElement("form",{id:"domoForm",onSubmit:t,name:"domoForm",action:"/maker",method:"POST",className:"domoForm"},React.createElement("label",{htmlFor:"name",id:"nameLabel"},"Name: "),React.createElement("input",{id:"domoName",type:"text",name:"name",placeholder:"Domo Name"}),React.createElement("label",{htmlFor:"age"},"Age: "),React.createElement("input",{id:"domoAge",type:"number",min:"0",name:"age"}),React.createElement("label",{htmlFor:"money"},"Money: "),React.createElement("input",{id:"domoMoney",type:"number",min:"0",name:"money"}),React.createElement("input",{id:"_csrf",type:"hidden",name:"_csrf",value:e.csrf}),React.createElement("input",{className:"makeDomoSubmit",type:"submit",value:"Make Domo"})),r=t=>{if(0===t.domos.length)return React.createElement("div",{className:"domoList"},React.createElement("h3",{className:"emptyDomo"},"No Domos Yet!"));const a=t.domos.map((a=>React.createElement("div",{key:a._id,className:"domo"},React.createElement("img",{src:"/assets/img/domoface.jpeg",alt:"domo face",className:"domoFace"}),React.createElement("h3",{className:"domoName"},"Name: ",a.name),React.createElement("h3",{className:"domoAge"},"Age: ",a.age),React.createElement("h3",{className:"domoMoney"},"Money: ",a.money),React.createElement("input",{id:"giveMoney",type:"button",value:"Give Money",onClick:t=>((t,a,o)=>{t.preventDefault(),e.hideError();const r=t.target.parentNode.querySelector("#_csrf").value;return e.sendPost("/giveMoney",{id:a,money:o,_csrf:r},n),!1})(t,a._id,a.money)}),React.createElement("input",{id:"_csrf",type:"hidden",name:"_csrf",value:t.csrf}))));return React.createElement("div",{className:"domoList"},a)},n=async()=>{const e=await fetch("/getDomos"),t=await e.json(),a=await fetch("/getToken"),o=await a.json();ReactDOM.render(React.createElement(r,{domos:t.domos,csrf:o.csrfToken}),document.getElementById("domos"))};window.onload=async()=>{const e=await fetch("/getToken"),t=await e.json();ReactDOM.render(React.createElement(o,{csrf:t.csrfToken}),document.getElementById("makeDomo")),ReactDOM.render(React.createElement(r,{domos:[],csrf:t.csrfToken}),document.getElementById("domos")),n()}})()})();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 603:
+/***/ ((module) => {
+
+/* Takes in an error message. Sets the error message up in html, and
+   displays it to the user. Will be hidden by other events that could
+   end in an error.
+*/
+const handleError = message => {
+  document.getElementById('errorText').textContent = message;
+  document.getElementById('errorMessage').classList.remove('hidden');
+};
+
+/* Sends post requests to the server using fetch. Will look for various
+    entries in the response JSON object, and will handle them appropriately.
+*/
+const sendPost = async (url, data, handler) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  const result = await response.json();
+  document.getElementById('errorMessage').classList.add('hidden');
+  if (result.error) {
+    handleError(result.error);
+  }
+  if (result.redirect) {
+    window.location = result.redirect;
+  }
+  if (handler) {
+    handler(result);
+  }
+};
+const hideError = () => {
+  document.getElementById('errorMessage').classList.add('hidden');
+};
+module.exports = {
+  handleError,
+  sendPost,
+  hideError
+};
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+const helper = __webpack_require__(603);
+const handleDomo = e => {
+  e.preventDefault();
+  helper.hideError();
+  const name = e.target.querySelector('#domoName').value;
+  const age = e.target.querySelector('#domoAge').value;
+  const money = e.target.querySelector('#domoMoney').value;
+  const _csrf = e.target.querySelector('#_csrf').value;
+  if (!name || !age) {
+    helper.handleError('All fields are required!');
+    return false;
+  }
+  helper.sendPost(e.target.action, {
+    name,
+    age,
+    money,
+    _csrf
+  }, loadDomosFromServer);
+  return false;
+};
+const handleGiveMoney = (e, id, money) => {
+  e.preventDefault();
+  helper.hideError();
+  const _csrf = e.target.parentNode.querySelector('#_csrf').value;
+  helper.sendPost('/giveMoney', {
+    id,
+    money,
+    _csrf
+  }, loadDomosFromServer);
+  return false;
+};
+const DomoForm = props => {
+  return /*#__PURE__*/React.createElement("form", {
+    id: "domoForm",
+    onSubmit: handleDomo,
+    name: "domoForm",
+    action: "/maker",
+    method: "POST",
+    className: "domoForm"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "name",
+    id: "nameLabel"
+  }, "Name: "), /*#__PURE__*/React.createElement("input", {
+    id: "domoName",
+    type: "text",
+    name: "name",
+    placeholder: "Domo Name"
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "age"
+  }, "Age: "), /*#__PURE__*/React.createElement("input", {
+    id: "domoAge",
+    type: "number",
+    min: "0",
+    name: "age"
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "money"
+  }, "Money: "), /*#__PURE__*/React.createElement("input", {
+    id: "domoMoney",
+    type: "number",
+    min: "0",
+    name: "money"
+  }), /*#__PURE__*/React.createElement("input", {
+    id: "_csrf",
+    type: "hidden",
+    name: "_csrf",
+    value: props.csrf
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "makeDomoSubmit",
+    type: "submit",
+    value: "Make Domo"
+  }));
+};
+const DomoList = props => {
+  if (props.domos.length === 0) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "domoList"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "emptyDomo"
+    }, "No Domos Yet!"));
+  }
+  const domoNodes = props.domos.map(domo => {
+    return /*#__PURE__*/React.createElement("div", {
+      key: domo._id,
+      className: "domo"
+    }, /*#__PURE__*/React.createElement("img", {
+      src: "/assets/img/domoface.jpeg",
+      alt: "domo face",
+      className: "domoFace"
+    }), /*#__PURE__*/React.createElement("h3", {
+      className: "domoName"
+    }, "Name: ", domo.name), /*#__PURE__*/React.createElement("h3", {
+      className: "domoAge"
+    }, "Age: ", domo.age), /*#__PURE__*/React.createElement("h3", {
+      className: "domoMoney"
+    }, "Money: ", domo.money), /*#__PURE__*/React.createElement("input", {
+      id: "giveMoney",
+      type: "button",
+      value: "Give Money",
+      onClick: e => handleGiveMoney(e, domo._id, domo.money)
+    }), /*#__PURE__*/React.createElement("input", {
+      id: "_csrf",
+      type: "hidden",
+      name: "_csrf",
+      value: props.csrf
+    }));
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    className: "domoList"
+  }, domoNodes);
+};
+const loadDomosFromServer = async () => {
+  const response = await fetch('/getDomos');
+  const data = await response.json();
+  const tokenRes = await fetch('/getToken');
+  const tokenData = await tokenRes.json();
+  ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
+    domos: data.domos,
+    csrf: tokenData.csrfToken
+  }), document.getElementById('domos'));
+};
+const init = async () => {
+  const response = await fetch('/getToken');
+  const data = await response.json();
+  ReactDOM.render( /*#__PURE__*/React.createElement(DomoForm, {
+    csrf: data.csrfToken
+  }), document.getElementById('makeDomo'));
+  ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
+    domos: [],
+    csrf: data.csrfToken
+  }), document.getElementById('domos'));
+  loadDomosFromServer();
+};
+window.onload = init;
+})();
+
+/******/ })()
+;

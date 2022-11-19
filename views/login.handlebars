@@ -1,25 +1,33 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>Title</title>
+  <title>Stage</title>
   <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&family=Rubik:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/dist/mg-plus.min.css">
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
-  <link rel="stylesheet" href="mg-plus.css">
 </head>
 <body> 
-  <section id="header"></section>
 
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
-    <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
-  </nav>
-  
-  <section id="content"></section>
-
-  <div id="errorMessage" class='hidden'>
-    <h3><span id="errorText"></span></h3>
+  <div class="fill mg-container">
+    <div class="fill-height mg-row">
+      <div class="mg-col mg-x2 mg-x--offset1 mg-x--start">
+        <section id="header"></section>
+      </div>
+      <div class="mg-col mg-x6 mg-x--middle">
+        <div class="mg-row mg-x--center">
+          <div class="mg-col mg-x4"><section id="content"></section></div>
+        </div>
+      </div>
+      <div class="mg-col mg-x3"></div>
+    </div>
+  </div>
+  <div class="canvas-background">
+    <canvas id="canvas"></canvas>
   </div>
   <script src="/assets/loginBundle.js"></script>
 </body>

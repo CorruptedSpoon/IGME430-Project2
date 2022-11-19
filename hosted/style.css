@@ -1,4 +1,4 @@
-/* html, body {
+html, body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -6,7 +6,107 @@
     overflow-x: hidden;
 }
 
-#logo {
+label {
+
+}
+
+input[type=text], input[type=password] {
+    text-align: center;
+    color: #efedde;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    border-color: #ce5c5c;
+}
+
+input[type=submit].button--outline {
+    color: #efedde;
+    border: 0.2rem solid #efedde;
+}
+
+input[type=submit].button--outline:hover {
+    transition: opacity .5s;
+    opacity: .5;
+}
+
+body {
+    background-color: #2d2c2b;
+    background-image: url("/assets/img/loginBackground.jpg");
+}
+
+h1 {
+    font-family: 'Fugaz One';
+    color: #efedde;
+}
+
+p, label, input {
+    font-family: 'Rubik', sans-serif;
+    color: #efedde;
+}
+
+#header {
+    padding-top: 30%;
+}
+
+#canvas-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+::placeholder {
+    color: #efedde;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: #efedde;
+}
+
+::-ms-input-placeholder {
+    color: #efedde;
+}
+
+:root {
+    --mg-color-primary: #ce5c5c;
+}
+
+.mg-nav>ul>li a {
+    font-family: 'Rubik', sans-serif;
+    color: #efedde;
+}
+
+.mg-nav>ul>li a:hover {
+    transition: opacity .5s;
+    opacity: .7;
+    background-color: inherit;
+}
+
+.fill {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+.fill-height {
+    height: 100%;
+}
+
+.center-text {
+    text-align: center;
+}
+
+/* #logo {
     height: 40px;
     width: 40;
     padding-top: 5px;
