@@ -1,5 +1,3 @@
-const parse = require('html-react-parser');
-
 // props contains an array of link objects with href, text, id, and current properties
 // href is the link destination
 // text is the link text
@@ -7,18 +5,20 @@ const parse = require('html-react-parser');
 // current is a boolean that determines if the link is active
 // returns a nav component with links based on the props
 const NavHeader = (props) => {
-    const navStart= '<ul><li id="logo"><h1><a href="/">Stage</a></h1></li>';
-    const linkList = props.links.reduce((acc, link) => {
+    const navList = props.links.map(link => {
         if(link.current) {
-            return acc + `<li id="${link.id}" class="active"><a href="${link.href}">${link.text}</a></li>`;
-        } else {
-            return acc + `<li id="${link.id}"><a href="${link.href}">${link.text}</a></li>`;
+            return <li id={link.id} className="active" key={link.id}><a href={link.href}>{link.text}</a></li>;
+        } else{
+            return <li id={link.id} key={link.id}><a href={link.href}>{link.text}</a></li>;
         }
-    }, navStart) + '</ul>';
+    });
 
     return (
         <div className="mg-nav" data-toggle="nav">
-            {parse(linkList)}
+            <ul>
+                <li id="logo"><h1><a href="/">Stage</a></h1></li>
+                {navList}
+            </ul>
         </div>
     );
 };
