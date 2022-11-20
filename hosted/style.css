@@ -6,10 +6,6 @@ html, body {
     overflow-x: hidden;
 }
 
-label {
-
-}
-
 input[type=text], input[type=password] {
     text-align: center;
     color: #efedde;

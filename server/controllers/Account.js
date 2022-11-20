@@ -16,17 +16,17 @@ const login = (req, res) => {
   const pass = `${req.body.pass}`;
 
   if (!username || !pass) {
-    return res.status(400).json({ error: 'All fields are required!' });
+    return res.status(400).json({ error: 'all fields are reqired' });
   }
 
   return Account.authenticate(username, pass, (err, account) => {
     if (err || !account) {
-      return res.status(401).json({ error: 'Wrong username or password!' });
+      return res.status(401).json({ error: 'wrong username or password' });
     }
 
     req.session.account = Account.toAPI(account);
 
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/post' });
   });
 };
 
@@ -36,11 +36,11 @@ const signup = async (req, res) => {
   const pass2 = `${req.body.pass2}`;
 
   if (!username || !pass || !pass2) {
-    return res.status(400).json({ error: 'All fields are required!' });
+    return res.status(400).json({ error: 'all fields are reqired' });
   }
 
   if (pass !== pass2) {
-    return res.status(400).json({ error: 'Passwords do not match!' });
+    return res.status(400).json({ error: 'passwords do not match' });
   }
 
   try {
@@ -48,13 +48,13 @@ const signup = async (req, res) => {
     const newAccount = new Account({ username, password: hash });
     await newAccount.save();
     req.session.account = Account.toAPI(newAccount);
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/post' });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
-      return res.status(400).json({ error: 'Username already in use!' });
+      return res.status(400).json({ error: 'this username is already in use' });
     }
-    return res.status(400).json({ error: 'An error occurred!' });
+    return res.status(400).json({ error: 'an error occurred' });
   }
 };
 

@@ -1,5 +1,5 @@
 const helper = require('./helper.js');
-const { NavHeader, RenderHeader } = require('./components.jsx');
+const { RenderHeader } = require('./components.jsx');
 
 const circles = [];
 
@@ -107,16 +107,17 @@ const SignupWindow = (props) => {
     );
 };
 
+// animates circles on login page
 const animateCanvas = () => {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const width = canvas.width = window.innerWidth;
     const height = canvas.height = window.innerHeight;
     const circleRadius = 230;
-    const circleSpeed = 1.3;
+    const circleSpeed = 3;
 
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle='rgba(255, 240, 147, 0.03)';
+    ctx.fillStyle='rgba(255, 240, 147, 0.05)';
 
     const moveCircle = (circleIndex) => {
         const circle = circles[circleIndex];
@@ -136,7 +137,7 @@ const animateCanvas = () => {
             circle.y = Math.random() * height;
         }
 
-        // if the center circle is colliding with the edge of the canvas, reverse the direction
+        // if the center of the circle is colliding with the edge of the canvas, reverse the direction
         if(circle.x < 0 || circle.x > width) {
             circle.dirX *= -1;
         }
@@ -197,11 +198,12 @@ const init = async () => {
         document.getElementById('content')
     );
     
+    // start the update loop for the circles animation
     const numCircles = 6;
     for( let i = 0; i < numCircles; i++) {
         circles.push({x: 0, y: 0, dirX: 0, dirY: 0});
     }
-    setInterval(animateCanvas, 1);
+    setInterval(animateCanvas, 500 / 60);
 };
 
 window.onload = init;

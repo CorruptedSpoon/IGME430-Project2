@@ -26,7 +26,6 @@ const RenderHeader = (links, activeId) => {
   }), document.getElementById('header'));
 };
 module.exports = {
-  NavHeader,
   RenderHeader
 };
 
@@ -2907,7 +2906,6 @@ var __webpack_exports__ = {};
 (() => {
 const helper = __webpack_require__(603);
 const {
-  NavHeader,
   RenderHeader
 } = __webpack_require__(235);
 const circles = [];
@@ -3080,9 +3078,9 @@ const animateCanvas = () => {
   const width = canvas.width = window.innerWidth;
   const height = canvas.height = window.innerHeight;
   const circleRadius = 230;
-  const circleSpeed = 1.3;
+  const circleSpeed = 3;
   ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = 'rgba(255, 240, 147, 0.03)';
+  ctx.fillStyle = 'rgba(255, 240, 147, 0.05)';
   const moveCircle = circleIndex => {
     const circle = circles[circleIndex];
 
@@ -3167,7 +3165,7 @@ const init = async () => {
       dirY: 0
     });
   }
-  setInterval(animateCanvas, 1);
+  setInterval(animateCanvas, 500 / 60);
 };
 window.onload = init;
 })();
