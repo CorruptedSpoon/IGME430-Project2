@@ -35,9 +35,14 @@ h1 {
     color: #efedde;
 }
 
-p, label, input {
+p, label, input, textarea {
     font-family: 'Rubik', sans-serif;
     color: #efedde;
+}
+
+textarea {
+    resize: vertical;
+    height: 50rem;
 }
 
 #header {
@@ -100,6 +105,10 @@ p, label, input {
 
 .center-text {
     text-align: center;
+}
+
+.hidden {
+    display: none;
 }
 
 /* #logo {
@@ -244,10 +253,6 @@ nav:nth-child(1) {
 #user:focus, #pass:focus, #pass2:focus {
     outline: none;
     box-shadow: 0px 0px 1px 1px #55acee;
-}
-
-.hidden {
-    display: none;
 }
 
 #domoMessage {

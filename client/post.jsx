@@ -29,20 +29,35 @@ const PostWindow = (props) => {
             className="mainForm"
         >
             <div className="mg-container">
-                <div className="mg-row"><label htmlFor="title">Title: </label></div>
+                <div className="mg-alert hidden" id="errorAlert">
+                    <span className="mg-alert--closebtn mg-icon-close" onClick={() => this.parentElement.className.add('hidden')}>
+                    </span>
+                    default alert
+                </div>
+                {/* <div className="mg-row">
+                    <div className="mg-col mg-x--center">
+                        <div className="mg-row"><label htmlFor="title">Title</label></div>
+                    </div>
+                </div> */}
                 <div className="mg-row"><input id="title" type="text" name="title" placeholder="title" /></div>
-                <div className="mg-row"><input id="body" type="text" name="body" placeholder="what's on your mind?" /></div>
+                {/* <div className="mg-row">
+                    <div className="mg-col mg-x--center">
+                        <div className="mg-row"><label htmlFor="body">Body</label></div>
+                    </div>
+                </div> */}
+                <div className="mg-row"><textarea id="body" type="text" name="body" placeholder="what's on your mind?" /></div>
                 <div className="mg-row">
                     <div className="mg-col mg-x--center">
                         <div className="mg-row">
-                            <input className="formSubmit button--outline" type="submit" value="Post" />
+                            <input className="formSubmit button--outline" type="submit" value="stage it" />
                         </div>
                     </div>
                 </div>
                 <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
-                <div id="errorMessage" className="hidden mg-row mg-row mg-x--center">
+                
+                {/* <div id="errorMessage" className="hidden mg-row mg-row mg-x--center">
                     <p className="center-text"><span id="errorText"></span></p>
-                </div>
+                </div> */}
             </div>
         </form>
     );

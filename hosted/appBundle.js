@@ -61,8 +61,8 @@ module.exports = {
    end in an error.
 */
 const handleError = message => {
-  document.getElementById('errorText').textContent = message;
-  document.getElementById('errorMessage').classList.remove('hidden');
+  document.getElementById('errorAlert').textContent = message;
+  document.getElementById('errorAlert').classList.remove('hidden');
 };
 
 /* Sends post requests to the server using fetch. Will look for various
@@ -89,7 +89,7 @@ const sendPost = async (url, data, handler) => {
   }
 };
 const hideError = () => {
-  document.getElementById('errorMessage').classList.add('hidden');
+  document.getElementById('errorAlert').classList.add('hidden');
 };
 module.exports = {
   handleError,
@@ -97,38 +97,11 @@ module.exports = {
   hideError
 };
 
-/***/ })
+/***/ }),
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
+/***/ 27:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
 const helper = __webpack_require__(603);
 const {
   RenderHeader
@@ -161,10 +134,12 @@ const PostWindow = props => {
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-container"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "mg-row"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "title"
-  }, "Title: ")), /*#__PURE__*/React.createElement("div", {
+    className: "mg-alert hidden",
+    id: "errorAlert"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mg-alert--closebtn mg-icon-close",
+    onClick: () => this.parentElement.className.add('hidden')
+  }), "default alert"), /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("input", {
     id: "title",
@@ -173,7 +148,7 @@ const PostWindow = props => {
     placeholder: "title"
   })), /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
-  }, /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("textarea", {
     id: "body",
     type: "text",
     name: "body",
@@ -187,20 +162,13 @@ const PostWindow = props => {
   }, /*#__PURE__*/React.createElement("input", {
     className: "formSubmit button--outline",
     type: "submit",
-    value: "Post"
+    value: "stage it"
   })))), /*#__PURE__*/React.createElement("input", {
     id: "_csrf",
     type: "hidden",
     name: "_csrf",
     value: props.csrf
-  }), /*#__PURE__*/React.createElement("div", {
-    id: "errorMessage",
-    className: "hidden mg-row mg-row mg-x--center"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "center-text"
-  }, /*#__PURE__*/React.createElement("span", {
-    id: "errorText"
-  })))));
+  })));
 };
 const init = async () => {
   const response = await fetch('/getToken');
@@ -238,7 +206,41 @@ const init = async () => {
   }), document.getElementById('content'));
 };
 window.onload = init;
-})();
 
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(27);
+/******/ 	
 /******/ })()
 ;

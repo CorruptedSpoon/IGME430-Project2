@@ -3,8 +3,8 @@
    end in an error.
 */
 const handleError = (message) => {
-    document.getElementById('errorText').textContent = message;
-    document.getElementById('errorMessage').classList.remove('hidden');
+    document.getElementById('errorAlert').textContent = message;
+    document.getElementById('errorAlert').classList.remove('hidden');
 };
   
 /* Sends post requests to the server using fetch. Will look for various
@@ -36,7 +36,7 @@ const sendPost = async (url, data, handler) => {
 };
 
 const hideError = () => {
-    document.getElementById('errorMessage').classList.add('hidden');
+    document.getElementById('errorAlert').classList.add('hidden');
 };
 
 module.exports = {
