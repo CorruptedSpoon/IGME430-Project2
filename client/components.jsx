@@ -23,6 +23,7 @@ const NavHeader = (props) => {
     );
 };
 
+
 // takes the link array and the id of the current page
 // renders the NavHeader component
 const RenderHeader = (links, activeId,) => {
@@ -35,6 +36,18 @@ const RenderHeader = (links, activeId,) => {
     );
 };
 
+const ErrorAlert = () =>{
+    return (
+        <div className="mg-alert warning hidden" id="errorAlert">
+            <span className="mg-alert--closebtn mg-icon-close" onClick={
+                (e) => e.currentTarget.parentElement.classList.toggle('hidden')
+            }></span>
+            default alert
+        </div>
+    );
+}
+
 module.exports = {
     RenderHeader,
+    ErrorAlert
 }

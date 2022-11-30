@@ -1,5 +1,5 @@
 const helper = require('./helper');
-const { RenderHeader } = require('./components.jsx');
+const { RenderHeader, ErrorAlert } = require('./components.jsx');
 
 const handlePost = (e) => {
     e.preventDefault();
@@ -29,11 +29,7 @@ const PostWindow = (props) => {
             className="mainForm"
         >
             <div className="mg-container">
-                <div className="mg-alert hidden" id="errorAlert">
-                    <span className="mg-alert--closebtn mg-icon-close" onClick={() => this.parentElement.className.add('hidden')}>
-                    </span>
-                    default alert
-                </div>
+                {ErrorAlert()}
                 {/* <div className="mg-row">
                     <div className="mg-col mg-x--center">
                         <div className="mg-row"><label htmlFor="title">Title</label></div>
@@ -54,10 +50,6 @@ const PostWindow = (props) => {
                     </div>
                 </div>
                 <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
-                
-                {/* <div id="errorMessage" className="hidden mg-row mg-row mg-x--center">
-                    <p className="center-text"><span id="errorText"></span></p>
-                </div> */}
             </div>
         </form>
     );

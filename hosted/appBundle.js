@@ -47,8 +47,18 @@ const RenderHeader = (links, activeId) => {
     links: links
   }), document.getElementById('header'));
 };
+const ErrorAlert = () => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "mg-alert warning hidden",
+    id: "errorAlert"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mg-alert--closebtn mg-icon-close",
+    onClick: e => e.currentTarget.parentElement.classList.toggle('hidden')
+  }), "default alert");
+};
 module.exports = {
-  RenderHeader
+  RenderHeader,
+  ErrorAlert
 };
 
 /***/ }),
@@ -77,7 +87,7 @@ const sendPost = async (url, data, handler) => {
     body: JSON.stringify(data)
   });
   const result = await response.json();
-  document.getElementById('errorMessage').classList.add('hidden');
+  document.getElementById('errorAlert').classList.add('hidden');
   if (result.error) {
     handleError(result.error);
   }
@@ -97,14 +107,42 @@ module.exports = {
   hideError
 };
 
-/***/ }),
+/***/ })
 
-/***/ 27:
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 const helper = __webpack_require__(603);
 const {
-  RenderHeader
+  RenderHeader,
+  ErrorAlert
 } = __webpack_require__(235);
 const handlePost = e => {
   e.preventDefault();
@@ -133,13 +171,7 @@ const PostWindow = props => {
     className: "mainForm"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-container"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "mg-alert hidden",
-    id: "errorAlert"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "mg-alert--closebtn mg-icon-close",
-    onClick: () => this.parentElement.className.add('hidden')
-  }), "default alert"), /*#__PURE__*/React.createElement("div", {
+  }, ErrorAlert(), /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("input", {
     id: "title",
@@ -206,41 +238,7 @@ const init = async () => {
   }), document.getElementById('content'));
 };
 window.onload = init;
+})();
 
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(27);
-/******/ 	
 /******/ })()
 ;

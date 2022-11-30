@@ -47,8 +47,18 @@ const RenderHeader = (links, activeId) => {
     links: links
   }), document.getElementById('header'));
 };
+const ErrorAlert = () => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "mg-alert warning hidden",
+    id: "errorAlert"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mg-alert--closebtn mg-icon-close",
+    onClick: e => e.currentTarget.parentElement.classList.toggle('hidden')
+  }), "default alert");
+};
 module.exports = {
-  RenderHeader
+  RenderHeader,
+  ErrorAlert
 };
 
 /***/ }),
@@ -77,7 +87,7 @@ const sendPost = async (url, data, handler) => {
     body: JSON.stringify(data)
   });
   const result = await response.json();
-  document.getElementById('errorMessage').classList.add('hidden');
+  document.getElementById('errorAlert').classList.add('hidden');
   if (result.error) {
     handleError(result.error);
   }
@@ -131,7 +141,8 @@ var __webpack_exports__ = {};
 (() => {
 const helper = __webpack_require__(603);
 const {
-  RenderHeader
+  RenderHeader,
+  ErrorAlert
 } = __webpack_require__(235);
 const circles = [];
 const handleLogin = e => {
@@ -184,7 +195,7 @@ const LoginWindow = props => {
     className: "mainForm"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-container"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, ErrorAlert(), /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
@@ -221,14 +232,7 @@ const LoginWindow = props => {
     type: "hidden",
     name: "_csrf",
     value: props.csrf
-  }), /*#__PURE__*/React.createElement("div", {
-    id: "errorMessage",
-    className: "hidden mg-row mg-x--center"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "center-text"
-  }, /*#__PURE__*/React.createElement("span", {
-    id: "errorText"
-  })))));
+  })));
 };
 const SignupWindow = props => {
   return /*#__PURE__*/React.createElement("form", {
@@ -240,7 +244,7 @@ const SignupWindow = props => {
     className: "mainForm"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-container"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, ErrorAlert(), /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
@@ -288,14 +292,7 @@ const SignupWindow = props => {
     type: "hidden",
     name: "_csrf",
     value: props.csrf
-  }), /*#__PURE__*/React.createElement("div", {
-    id: "errorMessage",
-    className: "hidden mg-row mg-row mg-x--center"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "center-text"
-  }, /*#__PURE__*/React.createElement("span", {
-    id: "errorText"
-  })))));
+  })));
 };
 
 // animates circles on login page

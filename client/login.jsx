@@ -1,5 +1,5 @@
 const helper = require('./helper.js');
-const { RenderHeader } = require('./components.jsx');
+const { RenderHeader, ErrorAlert } = require('./components.jsx');
 
 const circles = [];
 
@@ -55,6 +55,7 @@ const LoginWindow = (props) => {
             className="mainForm"
         >
             <div className="mg-container">
+                {ErrorAlert()}
                 <div className="mg-row"><label htmlFor="username">Username: </label></div>
                 <div className="mg-row"><input id="user" type="text" name="username" placeholder="username" /></div>
                 <div className="mg-row"><label htmlFor="pass">Password: </label></div>
@@ -67,9 +68,6 @@ const LoginWindow = (props) => {
                     </div>
                 </div>
                 <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
-                <div id="errorMessage" className="hidden mg-row mg-x--center">
-                    <p className="center-text"><span id="errorText"></span></p>
-                </div>
             </div>
         </form>
     );
@@ -85,6 +83,7 @@ const SignupWindow = (props) => {
             className="mainForm"
         >
             <div className="mg-container">
+                {ErrorAlert()}
                 <div className="mg-row"><label htmlFor="username">Username: </label></div>
                 <div className="mg-row"><input id="user" type="text" name="username" placeholder="username" /></div>
                 <div className="mg-row"><label htmlFor="pass">Password: </label></div>
@@ -99,9 +98,6 @@ const SignupWindow = (props) => {
                     </div>
                 </div>
                 <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
-                <div id="errorMessage" className="hidden mg-row mg-row mg-x--center">
-                    <p className="center-text"><span id="errorText"></span></p>
-                </div>
             </div>
         </form>
     );

@@ -20,7 +20,7 @@ const sendPost = async (url, data, handler) => {
     });
 
     const result = await response.json();
-    document.getElementById('errorMessage').classList.add('hidden');
+    document.getElementById('errorAlert').classList.add('hidden');
 
     if(result.error) {
         handleError(result.error);
