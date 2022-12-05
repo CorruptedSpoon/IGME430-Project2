@@ -19,15 +19,32 @@ const PostSchema = new mongoose.Schema({
     required: true,
     ref: 'Account',
   },
+  username: {
+    type: String,
+    required: true,
+  },
   likes: {
     type: Number,
     min: 0,
     required: true,
+    default: 0,
+  },
+  views: {
+    type: Number,
+    min: 0,
+    required: true,
+    default: 0,
+  },
+  score: {
+    type: Number,
+    min: 0,
+    required: true,
+    default: 100,
   },
   createdData: {
     type: Date,
     default: Date.now,
-  },
+  }
 });
 
 PostSchema.statics.toAPI = (doc) => ({

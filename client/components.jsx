@@ -36,18 +36,54 @@ const RenderHeader = (links, activeId,) => {
     );
 };
 
-const ErrorAlert = () =>{
+const PostView = (props) => {
     return (
-        <div className="mg-alert warning hidden" id="errorAlert">
+        <div className="mg-row post-box">
+            <div className="mg-col mg-x--center">
+                <div className="mg-row"><h3 className="post-title">{props.title}</h3></div>
+                <div className="mg-row"><h5 className="post-username">{props.username}</h5></div>
+                <div className="mg-row"><p>{props.body}</p></div>
+                <div className="mg-row">
+                    <div className="mg-x--center">
+                        <button className="button button--small button--link inactive" id="likeButton">
+                            <img className="imgButton" src="/assets/img/like-inactive.png" alt="like" id="likeImg"/>
+                        </button>
+                        <p className="center-text small-text" id="likeNum">{props.likes}</p>
+                    </div>
+                    <div className="mg-x--center">
+                        <button className="button button--small button--link" id="newButton">
+                            <img className="imgButton" src="/assets/img/new-inactive.png" alt="new" />
+                        </button>
+                        <p className="center-text small-text">new post</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+};
+
+const ErrorAlert = (props) =>{
+    return (
+        <div className="mg-alert warning" id="errorAlert">
             <span className="mg-alert--closebtn mg-icon-close" onClick={
                 (e) => e.currentTarget.parentElement.classList.toggle('hidden')
             }></span>
-            default alert
+            {props.message}
         </div>
     );
 }
 
+const HandleError = (message) => {
+    ReactDOM.render(
+        <ErrorAlert message={message} />,
+        document.getElementById('error')
+    );
+    document.getElementById('errorAlert').classList.remove('hidden');
+}
+
 module.exports = {
     RenderHeader,
-    ErrorAlert
+    PostView,
+    ErrorAlert,
+    HandleError
 }

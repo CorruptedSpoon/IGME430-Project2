@@ -47,33 +47,79 @@ const RenderHeader = (links, activeId) => {
     links: links
   }), document.getElementById('header'));
 };
-const ErrorAlert = () => {
+const PostView = props => {
   return /*#__PURE__*/React.createElement("div", {
-    className: "mg-alert warning hidden",
+    className: "mg-row post-box"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mg-col mg-x--center"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "post-title"
+  }, props.title)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("h5", {
+    className: "post-username"
+  }, props.username)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("p", null, props.body)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mg-x--center"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "button button--small button--link inactive",
+    id: "likeButton"
+  }, /*#__PURE__*/React.createElement("img", {
+    className: "imgButton",
+    src: "/assets/img/like-inactive.png",
+    alt: "like",
+    id: "likeImg"
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "center-text small-text",
+    id: "likeNum"
+  }, props.likes)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-x--center"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "button button--small button--link",
+    id: "newButton"
+  }, /*#__PURE__*/React.createElement("img", {
+    className: "imgButton",
+    src: "/assets/img/new-inactive.png",
+    alt: "new"
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "center-text small-text"
+  }, "new post")))));
+};
+const ErrorAlert = props => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "mg-alert warning",
     id: "errorAlert"
   }, /*#__PURE__*/React.createElement("span", {
     className: "mg-alert--closebtn mg-icon-close",
     onClick: e => e.currentTarget.parentElement.classList.toggle('hidden')
-  }), "default alert");
+  }), props.message);
+};
+const HandleError = message => {
+  ReactDOM.render( /*#__PURE__*/React.createElement(ErrorAlert, {
+    message: message
+  }), document.getElementById('error'));
+  document.getElementById('errorAlert').classList.remove('hidden');
 };
 module.exports = {
   RenderHeader,
-  ErrorAlert
+  PostView,
+  ErrorAlert,
+  HandleError
 };
 
 /***/ }),
 
 /***/ 603:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-/* Takes in an error message. Sets the error message up in html, and
-   displays it to the user. Will be hidden by other events that could
-   end in an error.
-*/
-const handleError = message => {
-  document.getElementById('errorAlert').textContent = message;
-  document.getElementById('errorAlert').classList.remove('hidden');
-};
+const {
+  HandleError
+} = __webpack_require__(235);
 
 /* Sends post requests to the server using fetch. Will look for various
     entries in the response JSON object, and will handle them appropriately.
@@ -87,9 +133,8 @@ const sendPost = async (url, data, handler) => {
     body: JSON.stringify(data)
   });
   const result = await response.json();
-  document.getElementById('errorAlert').classList.add('hidden');
   if (result.error) {
-    handleError(result.error);
+    HandleError(result.error);
   }
   if (result.redirect) {
     window.location = result.redirect;
@@ -98,13 +143,8 @@ const sendPost = async (url, data, handler) => {
     handler(result);
   }
 };
-const hideError = () => {
-  document.getElementById('errorAlert').classList.add('hidden');
-};
 module.exports = {
-  handleError,
-  sendPost,
-  hideError
+  sendPost
 };
 
 /***/ })
@@ -142,17 +182,17 @@ var __webpack_exports__ = {};
 const helper = __webpack_require__(603);
 const {
   RenderHeader,
-  ErrorAlert
+  ErrorAlert,
+  HandleError
 } = __webpack_require__(235);
 const circles = [];
 const handleLogin = e => {
   e.preventDefault();
-  helper.hideError();
   const username = e.target.querySelector('#user').value;
   const pass = e.target.querySelector('#pass').value;
   const _csrf = e.target.querySelector('#_csrf').value;
   if (!username || !pass) {
-    helper.handleError('all fields are required');
+    HandleError('all fields are required');
     return false;
   }
   helper.sendPost(e.target.action, {
@@ -164,17 +204,16 @@ const handleLogin = e => {
 };
 const handleSignup = e => {
   e.preventDefault();
-  helper.hideError();
   const username = e.target.querySelector('#user').value;
   const pass = e.target.querySelector('#pass').value;
   const pass2 = e.target.querySelector('#pass2').value;
   const _csrf = e.target.querySelector('#_csrf').value;
   if (!username || !pass || !pass2) {
-    helper.handleError('all fields are required');
+    HandleError('all fields are required');
     return false;
   }
   if (pass !== pass2) {
-    helper.handleError('passwords do not match');
+    HandleError('passwords do not match');
     return false;
   }
   helper.sendPost(e.target.action, {
@@ -195,7 +234,7 @@ const LoginWindow = props => {
     className: "mainForm"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-container"
-  }, ErrorAlert(), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
@@ -218,6 +257,8 @@ const LoginWindow = props => {
     name: "pass",
     placeholder: "password"
   })), /*#__PURE__*/React.createElement("div", {
+    id: "error"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-col mg-x--center"
@@ -244,7 +285,7 @@ const SignupWindow = props => {
     className: "mainForm"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-container"
-  }, ErrorAlert(), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "username"
@@ -278,6 +319,8 @@ const SignupWindow = props => {
     name: "pass2",
     placeholder: "retype password"
   })), /*#__PURE__*/React.createElement("div", {
+    id: "error"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "mg-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mg-col mg-x--center"

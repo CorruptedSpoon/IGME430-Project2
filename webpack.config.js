@@ -2,8 +2,9 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: './client/post.jsx',
-        login: './client/login.jsx',
+        post: './client/post.jsx',
+        stage: './client/stage.jsx',
+        login: './client/login.jsx',    
     },
     module: {
         rules: [

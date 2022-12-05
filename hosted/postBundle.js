@@ -47,6 +47,49 @@ const RenderHeader = (links, activeId) => {
     links: links
   }), document.getElementById('header'));
 };
+const PostView = props => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "mg-row post-box"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mg-col mg-x--center"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "post-title"
+  }, props.title)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("h5", {
+    className: "post-username"
+  }, props.username)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("p", null, props.body)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mg-x--center"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "button button--small button--link inactive",
+    id: "likeButton"
+  }, /*#__PURE__*/React.createElement("img", {
+    className: "imgButton",
+    src: "/assets/img/like-inactive.png",
+    alt: "like",
+    id: "likeImg"
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "center-text small-text",
+    id: "likeNum"
+  }, props.likes)), /*#__PURE__*/React.createElement("div", {
+    className: "mg-x--center"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "button button--small button--link",
+    id: "newButton"
+  }, /*#__PURE__*/React.createElement("img", {
+    className: "imgButton",
+    src: "/assets/img/new-inactive.png",
+    alt: "new"
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "center-text small-text"
+  }, "new post")))));
+};
 const ErrorAlert = props => {
   return /*#__PURE__*/React.createElement("div", {
     className: "mg-alert warning",
@@ -64,6 +107,7 @@ const HandleError = message => {
 };
 module.exports = {
   RenderHeader,
+  PostView,
   ErrorAlert,
   HandleError
 };
@@ -214,6 +258,11 @@ const init = async () => {
     id: 'postButton',
     current: false
   }, {
+    href: '/account',
+    text: 'Account',
+    id: 'accountButton',
+    current: false
+  }, {
     href: '/logout',
     text: 'Logout',
     id: 'logoutButton',
@@ -222,6 +271,7 @@ const init = async () => {
   RenderHeader(links, 'postButton');
   const postButton = document.getElementById('postButton');
   const stageButton = document.getElementById('stageButton');
+  const accountButton = document.getElementById('accountButton');
   postButton.addEventListener('click', e => {
     e.preventDefault();
     return false;
@@ -229,6 +279,11 @@ const init = async () => {
   stageButton.addEventListener('click', e => {
     e.preventDefault();
     window.location.href = '/stage';
+    return false;
+  });
+  accountButton.addEventListener('click', e => {
+    e.preventDefault();
+    window.location.href = '/account';
     return false;
   });
   ReactDOM.render( /*#__PURE__*/React.createElement(PostWindow, {

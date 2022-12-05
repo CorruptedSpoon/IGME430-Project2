@@ -1,18 +1,17 @@
 const helper = require('./helper.js');
-const { RenderHeader, ErrorAlert } = require('./components.jsx');
+const { RenderHeader, ErrorAlert, HandleError } = require('./components.jsx');
 
 const circles = [];
 
 const handleLogin = (e) => {
     e.preventDefault();
-    helper.hideError();
 
     const username = e.target.querySelector('#user').value;
     const pass = e.target.querySelector('#pass').value;
     const _csrf = e.target.querySelector('#_csrf').value;
 
     if(!username || !pass) {
-        helper.handleError('all fields are required');
+        HandleError('all fields are required');
         return false;
     }
 
@@ -23,7 +22,6 @@ const handleLogin = (e) => {
 
 const handleSignup = (e) => {
     e.preventDefault();
-    helper.hideError();
 
     const username = e.target.querySelector('#user').value;
     const pass = e.target.querySelector('#pass').value;
@@ -31,12 +29,12 @@ const handleSignup = (e) => {
     const _csrf = e.target.querySelector('#_csrf').value;
 
     if(!username || !pass || !pass2) {
-        helper.handleError('all fields are required');
+        HandleError('all fields are required');
         return false;
     }
 
     if(pass !== pass2) {
-        helper.handleError('passwords do not match');
+        HandleError('passwords do not match');
         return false;
     }
 
@@ -55,11 +53,11 @@ const LoginWindow = (props) => {
             className="mainForm"
         >
             <div className="mg-container">
-                {ErrorAlert()}
                 <div className="mg-row"><label htmlFor="username">Username: </label></div>
                 <div className="mg-row"><input id="user" type="text" name="username" placeholder="username" /></div>
                 <div className="mg-row"><label htmlFor="pass">Password: </label></div>
                 <div className="mg-row"><input id="pass" type="password" name="pass" placeholder="password" /></div>
+                <div id="error"></div>
                 <div className="mg-row">
                     <div className="mg-col mg-x--center">
                         <div className="mg-row">
@@ -83,13 +81,13 @@ const SignupWindow = (props) => {
             className="mainForm"
         >
             <div className="mg-container">
-                {ErrorAlert()}
                 <div className="mg-row"><label htmlFor="username">Username: </label></div>
                 <div className="mg-row"><input id="user" type="text" name="username" placeholder="username" /></div>
                 <div className="mg-row"><label htmlFor="pass">Password: </label></div>
                 <div className="mg-row"><input id="pass" type="password" name="pass" placeholder="password" /></div>
                 <div className="mg-row"><label htmlFor="pass2">Password: </label></div>
                 <div className="mg-row"><input id="pass2" type="password" name="pass2" placeholder="retype password" /></div>
+                <div id="error"></div>
                 <div className="mg-row">
                     <div className="mg-col mg-x--center">
                         <div className="mg-row">

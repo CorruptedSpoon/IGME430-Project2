@@ -1,11 +1,4 @@
-/* Takes in an error message. Sets the error message up in html, and
-   displays it to the user. Will be hidden by other events that could
-   end in an error.
-*/
-const handleError = (message) => {
-    document.getElementById('errorAlert').textContent = message;
-    document.getElementById('errorAlert').classList.remove('hidden');
-};
+const { HandleError } = require('./components.jsx');
   
 /* Sends post requests to the server using fetch. Will look for various
     entries in the response JSON object, and will handle them appropriately.
@@ -20,10 +13,9 @@ const sendPost = async (url, data, handler) => {
     });
 
     const result = await response.json();
-    document.getElementById('errorAlert').classList.add('hidden');
 
     if(result.error) {
-        handleError(result.error);
+        HandleError(result.error);
     }
 
     if(result.redirect) {
@@ -35,12 +27,6 @@ const sendPost = async (url, data, handler) => {
     }
 };
 
-const hideError = () => {
-    document.getElementById('errorAlert').classList.add('hidden');
-};
-
 module.exports = {
-    handleError,
     sendPost,
-    hideError,
 };

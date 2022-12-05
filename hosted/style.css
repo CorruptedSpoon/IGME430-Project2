@@ -30,8 +30,8 @@ body {
     background-image: url("/assets/img/loginBackground.jpg");
 }
 
-h1 {
-    font-family: 'Fugaz One';
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rubik';
     color: #efedde;
 }
 
@@ -42,7 +42,7 @@ p, label, input, textarea {
 
 textarea {
     resize: vertical;
-    height: 50rem;
+    height: 30rem;
 }
 
 #header {
@@ -107,8 +107,40 @@ textarea {
     text-align: center;
 }
 
+.small-text {
+    font-size: 1.1rem;
+}
+
 .hidden {
     display: none;
+}
+
+.imgButton {
+    height: 100%;
+    width: 100%;
+}
+
+.post-box {
+    background-color: #181716;
+    border: 0.2rem solid #ce5c5c;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    margin: 2rem;
+}
+
+.post-title {
+    margin-bottom: 0;
+}
+
+.post-username {
+    margin-bottom: 3rem;
+    color: #ce5c5c;
+    font-size: 1.5rem;
+}
+
+.button.button--link:hover {
+    transition: opacity .2s;
+    opacity: .6;
 }
 
 /* #logo {
