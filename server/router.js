@@ -15,6 +15,8 @@ const router = (app) => {
   app.post('/post', mid.requiresLogin, controllers.Post.createPost);
 
   app.get('/stage', mid.requiresLogin, controllers.Post.stagePage);
+  
+  app.get('/account', mid.requiresLogin, controllers.Post.accountPage);
 
   app.get('/stagedPost', mid.requiresLogin, controllers.Post.stagedPost);
 

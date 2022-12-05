@@ -4,6 +4,7 @@ const { Post } = models;
 
 const postPage = (req, res) => res.render('post');
 const stagePage = (req, res) => res.render('stage');
+const accountPage = (req, res) => res.render('account');
 
 const createPost = async (req, res) => {
   if (!req.body.title || !req.body.body) {
@@ -144,6 +145,7 @@ const getPosts = (req, res) => Post.findByOwner(req.session.account._id, (err, d
 module.exports = {
   postPage,
   stagePage,
+  accountPage,
   createPost,
   deletePost,
   addLike,

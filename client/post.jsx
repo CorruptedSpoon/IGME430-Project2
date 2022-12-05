@@ -1,5 +1,5 @@
 const helper = require('./helper');
-const { RenderHeader, ErrorAlert, HandleError } = require('./components.jsx');
+const { RenderHeader, HandleError } = require('./components.jsx');
 
 const handlePost = (e) => {
     e.preventDefault();

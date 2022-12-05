@@ -58,6 +58,32 @@ textarea {
     z-index: -1;
 }
 
+#account-nav li {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+#account-nav h2 {
+    font-size: 4.2rem;
+}
+
+#premium-indicator {
+    font-size: 1.8rem;
+    color: #ce5c5c;
+}
+
+#my-posts {
+    padding-top: 8rem;
+}
+
+#account-options {
+    margin-bottom: 50%;
+}
+
+#account-title {
+    margin-bottom: 20%;
+}
+
 ::placeholder {
     color: #efedde;
     opacity: 1;

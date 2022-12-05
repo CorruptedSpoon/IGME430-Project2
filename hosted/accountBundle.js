@@ -112,41 +112,6 @@ module.exports = {
   HandleError
 };
 
-/***/ }),
-
-/***/ 603:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const {
-  HandleError
-} = __webpack_require__(235);
-
-/* Sends post requests to the server using fetch. Will look for various
-    entries in the response JSON object, and will handle them appropriately.
-*/
-const sendPost = async (url, data, handler) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  const result = await response.json();
-  if (result.error) {
-    HandleError(result.error);
-  }
-  if (result.redirect) {
-    window.location = result.redirect;
-  }
-  if (handler) {
-    handler(result);
-  }
-};
-module.exports = {
-  sendPost
-};
-
 /***/ })
 
 /******/ 	});
@@ -179,69 +144,48 @@ module.exports = {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const helper = __webpack_require__(603);
 const {
   RenderHeader,
-  HandleError
+  PostView
 } = __webpack_require__(235);
-const handlePost = e => {
-  e.preventDefault();
-  const title = e.target.querySelector('#title').value;
-  const body = e.target.querySelector('#body').value;
-  const _csrf = e.target.querySelector('#_csrf').value;
-  if (!title || !body) {
-    HandleError('all fields are required');
-    return false;
-  }
-  helper.sendPost(e.target.action, {
-    title,
-    body,
-    _csrf
-  });
-  return false;
-};
-const PostWindow = props => {
-  return /*#__PURE__*/React.createElement("form", {
-    id: "postForm",
-    name: "postForm",
-    onSubmit: handlePost,
-    action: "/post",
-    method: "POST",
-    className: "mainForm"
+const AccountOptions = props => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "mg-row fill-height",
+    id: "account-options"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "mg-container"
+    className: "mg-col mg-x6"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "mg-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    id: "title",
-    type: "text",
-    name: "title",
-    placeholder: "title"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "mg-row"
-  }, /*#__PURE__*/React.createElement("textarea", {
-    id: "body",
-    type: "text",
-    name: "body",
-    placeholder: "what's on your mind?"
-  })), /*#__PURE__*/React.createElement("div", {
-    id: "error"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "mg-row"
-  }, /*#__PURE__*/React.createElement("div", {
+    className: "mg-nav",
+    "data-toggle": "nav"
+  }, /*#__PURE__*/React.createElement("ul", {
+    id: "account-nav",
+    className: "post-box"
+  }, /*#__PURE__*/React.createElement("li", {
+    id: "account-title"
+  }, /*#__PURE__*/React.createElement("h2", null, "My Account")), /*#__PURE__*/React.createElement("li", {
+    id: "premium-indicator",
+    className: "hidden"
+  }, /*#__PURE__*/React.createElement("p", null, "Premium User")), /*#__PURE__*/React.createElement("li", {
+    id: "myPosts"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "/account"
+  }, "My Posts")), /*#__PURE__*/React.createElement("li", {
+    id: "premium"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "/account"
+  }, "Stage Premium")), /*#__PURE__*/React.createElement("li", {
+    id: "changePassButton"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "/account"
+  }, "Change Password")), /*#__PURE__*/React.createElement("li", {
+    id: "ex1"
+  }, /*#__PURE__*/React.createElement("a", null, "Example Option 1")), /*#__PURE__*/React.createElement("li", {
+    id: "ex2"
+  }, /*#__PURE__*/React.createElement("a", null, "Example Option 2")), /*#__PURE__*/React.createElement("li", {
+    id: "ex3"
+  }, /*#__PURE__*/React.createElement("a", null, "Example Option 3"))), /*#__PURE__*/React.createElement("div", {
     className: "mg-col mg-x--center"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "mg-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    className: "formSubmit button--outline",
-    type: "submit",
-    value: "stage it"
-  })))), /*#__PURE__*/React.createElement("input", {
-    id: "_csrf",
-    type: "hidden",
-    name: "_csrf",
-    value: props.csrf
-  })));
+  }))));
 };
 const init = async () => {
   const response = await fetch('/getToken');
@@ -267,12 +211,14 @@ const init = async () => {
     id: 'logoutButton',
     current: false
   }];
-  RenderHeader(links, 'postButton');
+  RenderHeader(links, 'accountButton');
   const postButton = document.getElementById('postButton');
   const stageButton = document.getElementById('stageButton');
   const accountButton = document.getElementById('accountButton');
+  const logoutButton = document.getElementById('logoutButton');
   postButton.addEventListener('click', e => {
     e.preventDefault();
+    window.location.href = '/post';
     return false;
   });
   stageButton.addEventListener('click', e => {
@@ -282,12 +228,9 @@ const init = async () => {
   });
   accountButton.addEventListener('click', e => {
     e.preventDefault();
-    window.location.href = '/account';
     return false;
   });
-  ReactDOM.render( /*#__PURE__*/React.createElement(PostWindow, {
-    csrf: data.csrfToken
-  }), document.getElementById('content'));
+  ReactDOM.render( /*#__PURE__*/React.createElement(AccountOptions, null), document.getElementById('content'));
 };
 window.onload = init;
 })();

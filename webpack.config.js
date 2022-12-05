@@ -4,6 +4,7 @@ module.exports = {
     entry: {
         post: './client/post.jsx',
         stage: './client/stage.jsx',
+        account: './client/account.jsx',
         login: './client/login.jsx',    
     },
     module: {
