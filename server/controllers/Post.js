@@ -5,6 +5,7 @@ const { Post } = models;
 const postPage = (req, res) => res.render('post');
 const stagePage = (req, res) => res.render('stage');
 const accountPage = (req, res) => res.render('account');
+const notFoundPage = (req, res) => res.render('notFound');
 
 // creates a new post object using the data from the request body
 // saves it to the database if it is not a direct duplicate of an existing post
@@ -156,6 +157,7 @@ module.exports = {
   postPage,
   stagePage,
   accountPage,
+  notFoundPage,
   createPost,
   addLike,
   removeLike,

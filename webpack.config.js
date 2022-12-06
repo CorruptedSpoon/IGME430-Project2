@@ -5,7 +5,7 @@ module.exports = {
         post: './client/post.jsx',
         stage: './client/stage.jsx',
         account: './client/account.jsx',
-        login: './client/login.jsx',    
+        login: './client/login.jsx',
     },
     module: {
         rules: [

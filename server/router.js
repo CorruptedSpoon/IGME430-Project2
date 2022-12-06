@@ -34,6 +34,8 @@ const router = (app) => {
   app.post('/removeLike', mid.requiresLogin, controllers.Post.removeLike);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+
+  app.get('/*', controllers.Post.notFoundPage);
 };
 
 module.exports = router;
