@@ -140,7 +140,7 @@ const randomPost = (req, res) => Post.count().exec((err, count) => {
     }
     return res.status(200).json({ post: doc });
   });
-  // return res.status(400).json({ error: 'an error occurred' });
+  return;
 });
 
 // get all posts for the current user
