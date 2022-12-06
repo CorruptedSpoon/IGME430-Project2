@@ -47,7 +47,25 @@ const RenderHeader = (links, activeId) => {
     links: links
   }), document.getElementById('header'));
 };
+
+// props contains the title, body, username, and likes of the post
+// generates a post component. If being displayed on the myposts page, the 'new post' button is hidden
 const PostView = props => {
+  let newButton = /*#__PURE__*/React.createElement("div", null);
+  if (!props.myposts) {
+    newButton = /*#__PURE__*/React.createElement("div", {
+      className: "mg-x--center"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "button button--small button--link",
+      id: "newButton"
+    }, /*#__PURE__*/React.createElement("img", {
+      className: "imgButton",
+      src: "/assets/img/new-inactive.png",
+      alt: "new"
+    })), /*#__PURE__*/React.createElement("p", {
+      className: "center-text small-text"
+    }, "new post"));
+  }
   return /*#__PURE__*/React.createElement("div", {
     className: "mg-row post-box"
   }, /*#__PURE__*/React.createElement("div", {
@@ -77,19 +95,11 @@ const PostView = props => {
   })), /*#__PURE__*/React.createElement("p", {
     className: "center-text small-text",
     id: "likeNum"
-  }, props.likes)), /*#__PURE__*/React.createElement("div", {
-    className: "mg-x--center"
-  }, /*#__PURE__*/React.createElement("button", {
-    className: "button button--small button--link",
-    id: "newButton"
-  }, /*#__PURE__*/React.createElement("img", {
-    className: "imgButton",
-    src: "/assets/img/new-inactive.png",
-    alt: "new"
-  })), /*#__PURE__*/React.createElement("p", {
-    className: "center-text small-text"
-  }, "new post")))));
+  }, props.likes)), newButton)));
 };
+
+// props contains the error message
+// generates an error alert component
 const ErrorAlert = props => {
   return /*#__PURE__*/React.createElement("div", {
     className: "mg-alert warning",
@@ -99,6 +109,8 @@ const ErrorAlert = props => {
     onClick: e => e.currentTarget.parentElement.classList.toggle('hidden')
   }), props.message);
 };
+
+// creates an error alert with the given message and renders it in the error div
 const HandleError = message => {
   ReactDOM.render( /*#__PURE__*/React.createElement(ErrorAlert, {
     message: message

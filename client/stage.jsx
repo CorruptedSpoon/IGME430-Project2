@@ -1,6 +1,9 @@
-const { RenderHeader, PostView, CommentView, HandleError } = require('./components.jsx');
+const { RenderHeader, PostView, HandleError } = require('./components.jsx');
 const helper = require('./helper.js');
 
+// this component displays a single post chosen based on a score
+// for testing purposes, it will display a random post from the database
+// because of low volume of posts and users
 const StageWindow = (props) => {
     return (
         <div className="mg-container">
@@ -43,8 +46,10 @@ const init = async () => {
         return false;
     });
 
+    // get a random post from the database and updates its score
+    // displays the post in the StageWindow component
     const getPost = async () => {
-        const response = await fetch('/stagedPost');
+        const response = await fetch('/randomPost');
         currentPost = await response.json();
         if (currentPost.error){
             HandleError(currentPost.error);
@@ -62,6 +67,7 @@ const init = async () => {
     const likeButton = document.getElementById('likeButton');
     const newButton = document.getElementById('newButton');
 
+    // handles the like button, toggling between active and inactive when adding and removing likes
     likeButton.addEventListener('click', async (e) => {
         e.preventDefault();
         const likeNum = document.getElementById('likeNum');
@@ -78,6 +84,7 @@ const init = async () => {
         }
     });
 
+    // handles the new button, getting a new post from the database
     newButton.addEventListener('click', async (e) => {
         e.preventDefault();
         document.getElementById('likeButton').className = 'button button--small button--link inactive';

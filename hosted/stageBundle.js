@@ -47,7 +47,25 @@ const RenderHeader = (links, activeId) => {
     links: links
   }), document.getElementById('header'));
 };
+
+// props contains the title, body, username, and likes of the post
+// generates a post component. If being displayed on the myposts page, the 'new post' button is hidden
 const PostView = props => {
+  let newButton = /*#__PURE__*/React.createElement("div", null);
+  if (!props.myposts) {
+    newButton = /*#__PURE__*/React.createElement("div", {
+      className: "mg-x--center"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "button button--small button--link",
+      id: "newButton"
+    }, /*#__PURE__*/React.createElement("img", {
+      className: "imgButton",
+      src: "/assets/img/new-inactive.png",
+      alt: "new"
+    })), /*#__PURE__*/React.createElement("p", {
+      className: "center-text small-text"
+    }, "new post"));
+  }
   return /*#__PURE__*/React.createElement("div", {
     className: "mg-row post-box"
   }, /*#__PURE__*/React.createElement("div", {
@@ -77,19 +95,11 @@ const PostView = props => {
   })), /*#__PURE__*/React.createElement("p", {
     className: "center-text small-text",
     id: "likeNum"
-  }, props.likes)), /*#__PURE__*/React.createElement("div", {
-    className: "mg-x--center"
-  }, /*#__PURE__*/React.createElement("button", {
-    className: "button button--small button--link",
-    id: "newButton"
-  }, /*#__PURE__*/React.createElement("img", {
-    className: "imgButton",
-    src: "/assets/img/new-inactive.png",
-    alt: "new"
-  })), /*#__PURE__*/React.createElement("p", {
-    className: "center-text small-text"
-  }, "new post")))));
+  }, props.likes)), newButton)));
 };
+
+// props contains the error message
+// generates an error alert component
 const ErrorAlert = props => {
   return /*#__PURE__*/React.createElement("div", {
     className: "mg-alert warning",
@@ -99,6 +109,8 @@ const ErrorAlert = props => {
     onClick: e => e.currentTarget.parentElement.classList.toggle('hidden')
   }), props.message);
 };
+
+// creates an error alert with the given message and renders it in the error div
 const HandleError = message => {
   ReactDOM.render( /*#__PURE__*/React.createElement(ErrorAlert, {
     message: message
@@ -182,10 +194,13 @@ var __webpack_exports__ = {};
 const {
   RenderHeader,
   PostView,
-  CommentView,
   HandleError
 } = __webpack_require__(235);
 const helper = __webpack_require__(603);
+
+// this component displays a single post chosen based on a score
+// for testing purposes, it will display a random post from the database
+// because of low volume of posts and users
 const StageWindow = props => {
   return /*#__PURE__*/React.createElement("div", {
     className: "mg-container"
@@ -239,8 +254,11 @@ const init = async () => {
     window.location.href = '/account';
     return false;
   });
+
+  // get a random post from the database and updates its score
+  // displays the post in the StageWindow component
   const getPost = async () => {
-    const response = await fetch('/stagedPost');
+    const response = await fetch('/randomPost');
     currentPost = await response.json();
     if (currentPost.error) {
       HandleError(currentPost.error);
@@ -260,6 +278,8 @@ const init = async () => {
   await getPost();
   const likeButton = document.getElementById('likeButton');
   const newButton = document.getElementById('newButton');
+
+  // handles the like button, toggling between active and inactive when adding and removing likes
   likeButton.addEventListener('click', async e => {
     e.preventDefault();
     const likeNum = document.getElementById('likeNum');
@@ -281,6 +301,8 @@ const init = async () => {
       document.getElementById('likeImg').src = '/assets/img/like-inactive.png';
     }
   });
+
+  // handles the new button, getting a new post from the database
   newButton.addEventListener('click', async e => {
     e.preventDefault();
     document.getElementById('likeButton').className = 'button button--small button--link inactive';

@@ -44,7 +44,7 @@ const PostSchema = new mongoose.Schema({
   createdData: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 PostSchema.statics.toAPI = (doc) => ({
@@ -57,7 +57,7 @@ PostSchema.statics.findByOwner = (ownerId, callback) => {
     owner: mongoose.Types.ObjectId(ownerId),
   };
 
-  return PostModel.find(search).select('title body').lean().exec(callback);
+  return PostModel.find(search).select('title body username likes').lean().exec(callback);
 };
 
 PostModel = mongoose.model('Post', PostSchema);

@@ -18,6 +18,7 @@ const handlePost = (e) => {
     return false;
 };
 
+// the post creation form component
 const PostWindow = (props) => {
     return (
         <form id="postForm"

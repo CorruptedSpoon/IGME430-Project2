@@ -36,7 +36,20 @@ const RenderHeader = (links, activeId,) => {
     );
 };
 
+// props contains the title, body, username, and likes of the post
+// generates a post component. If being displayed on the myposts page, the 'new post' button is hidden
 const PostView = (props) => {
+    let newButton = <div></div>;
+    if(!props.myposts) {
+        newButton = 
+            <div className="mg-x--center">
+                <button className="button button--small button--link" id="newButton">
+                    <img className="imgButton" src="/assets/img/new-inactive.png" alt="new" />
+                </button>
+                <p className="center-text small-text">new post</p>
+            </div>;
+    }
+
     return (
         <div className="mg-row post-box">
             <div className="mg-col mg-x--center">
@@ -50,18 +63,15 @@ const PostView = (props) => {
                         </button>
                         <p className="center-text small-text" id="likeNum">{props.likes}</p>
                     </div>
-                    <div className="mg-x--center">
-                        <button className="button button--small button--link" id="newButton">
-                            <img className="imgButton" src="/assets/img/new-inactive.png" alt="new" />
-                        </button>
-                        <p className="center-text small-text">new post</p>
-                    </div>
+                    {newButton}
                 </div>
             </div>
         </div>
     )
 };
 
+// props contains the error message
+// generates an error alert component
 const ErrorAlert = (props) =>{
     return (
         <div className="mg-alert warning" id="errorAlert">
@@ -73,6 +83,7 @@ const ErrorAlert = (props) =>{
     );
 }
 
+// creates an error alert with the given message and renders it in the error div
 const HandleError = (message) => {
     ReactDOM.render(
         <ErrorAlert message={message} />,
